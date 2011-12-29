@@ -38,5 +38,3 @@ document.body.addEventListener("keydown", function (event) {
 }, false); 
 
 
-console.log('blip');
-

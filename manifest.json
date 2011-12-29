@@ -1,6 +1,6 @@
 {
 	"name": "Plain Text Copy And Paste",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Removes formatting from copied text and clears the selection after copying.",
 	"content_scripts": [
 		{
