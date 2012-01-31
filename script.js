@@ -1,18 +1,25 @@
 
 // variables
 var helper = null
-,	trim = true
 ,	selection = null
-,	text = '';
+,	range = null
+,	text = ''
+,	trim = true
+,	deselect = false;
 
 document.body.addEventListener("keydown", function (event) {
 	
 	// only proceed if crtl + c is pressed
 	if (event.ctrlKey !== true || event.keyCode !== 67) return true;
-
+	
 	// get selected text without dom info		
 	selection = window.getSelection();
 	text = selection.toString();
+	
+	// get old range
+	if (selection.getRangeAt && selection.rangeCount && !deselect)
+		range = selection.getRangeAt(0);
+		else range = null;
 	
 	// trim whitespace if chosen
 	if (trim === true) text = text.replace(/^\s+|\s+$/g, '');		
@@ -33,8 +40,17 @@ document.body.addEventListener("keydown", function (event) {
 	helper.select();
 	
 	// hide the element after 100ms
-	window.setTimeout(function () { helper.style.display = "none"; },100);
+	window.setTimeout(function () { 
+	
+		// hide helper element
+		helper.style.display = "none";
+		
+		// restore selection if one exists
+		if (range === null && !deselect) return; 
+		selection = window.getSelection();
+		selection.removeAllRanges();
+		selection.addRange(range);
+		
+	},100);
 
 }, false); 
-
-
